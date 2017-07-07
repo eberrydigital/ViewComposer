@@ -55,9 +55,9 @@ class MakeableTests: BaseXCTest {
     }
     
     func testStackView() {
-        let s1 = UIStackView.make(style.merge(master: .views(arrangedSubviews)))
-        let s2: UIStackView = .make(style.merge(master: .views(arrangedSubviews)))
-        let s3: UIStackView = make(style.merge(master: .views(arrangedSubviews)))
+        let s1 = UIStackView.make(style.merge(overwrittenBy: .views(arrangedSubviews)))
+        let s2: UIStackView = .make(style.merge(overwrittenBy: .views(arrangedSubviews)))
+        let s3: UIStackView = make(style.merge(overwrittenBy: .views(arrangedSubviews)))
         let s4: UIStackView = style <<- .views(arrangedSubviews)
         let stackViews = [s1, s2, s3, s4]
         for stackView in stackViews {
@@ -81,12 +81,12 @@ class MakeableTests: BaseXCTest {
     }
     
     func testStackViewUsingMergeGeneric() {
-        let s1: UIStackView = style.merge(master: [.spacing(spacing), .views(arrangedSubviews)])
-        let s2: UIStackView = style.merge(slave: [.spacing(spacing), .views(arrangedSubviews)])
-        let s3: UIStackView = style.merge(master: ViewStyle([.spacing(spacing), .views(arrangedSubviews)]))
-        let s4: UIStackView = style.merge(slave: ViewStyle([.spacing(spacing), .views(arrangedSubviews)]))
-        let s5: UIStackView = style.merge(master: .views(arrangedSubviews))
-        let s6: UIStackView = style.merge(slave: .views(arrangedSubviews))
+        let s1: UIStackView = style.merge(overwrittenBy: [.spacing(spacing), .views(arrangedSubviews)])
+        let s2: UIStackView = style.merge(superiorTo: [.spacing(spacing), .views(arrangedSubviews)])
+        let s3: UIStackView = style.merge(overwrittenBy: ViewStyle([.spacing(spacing), .views(arrangedSubviews)]))
+        let s4: UIStackView = style.merge(superiorTo: ViewStyle([.spacing(spacing), .views(arrangedSubviews)]))
+        let s5: UIStackView = style.merge(overwrittenBy: .views(arrangedSubviews))
+        let s6: UIStackView = style.merge(superiorTo: .views(arrangedSubviews))
         let stackViews = [s1, s2, s3, s4, s5, s6]
         for stackView in stackViews {
             assertIs(stackView.layer.cornerRadius, is: cornerRadius)
@@ -96,7 +96,7 @@ class MakeableTests: BaseXCTest {
     }
     
     func testComposableStackViewUsingMerge() {
-        let stackView = StackView(style.merge(master: [.spacing(spacing), .views(arrangedSubviews)]))
+        let stackView = StackView(style.merge(overwrittenBy: [.spacing(spacing), .views(arrangedSubviews)]))
         assertIs(stackView.arrangedSubviews.count, is: arrangedSubviews.count)
         assertIs(stackView.backgroundColorView?.backgroundColor, is: color)
     }

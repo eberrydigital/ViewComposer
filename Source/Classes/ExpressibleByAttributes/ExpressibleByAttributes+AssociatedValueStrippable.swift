@@ -1,14 +1,13 @@
 //
-//  Attributed+AssociatedValueStrippable.swift
+//  ExpressibleByAttributes+AssociatedValueStrippable.swift
 //  ViewComposer
 //
-//  Created by Alexander Cyon on 2017-06-06.
-//
+//  Created by Alexander Cyon on 2017-07-07.
 //
 
 import Foundation
 
-public extension Attributed {
+public extension ExpressibleByAttributes {
     typealias Stripped = Attribute.Stripped
     var stripped: [Stripped] { return attributes.map { $0.stripped } }
 }

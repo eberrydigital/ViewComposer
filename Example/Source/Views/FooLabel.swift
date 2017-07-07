@@ -17,7 +17,7 @@ final class FooLabel: UIView, FooProtocol {
     let label: UILabel
     
     init(_ style: ViewStyle? = nil) {
-        let style = style.merge(slave: [.textAlignment(.center), .font(.systemFont(ofSize: 40))])
+        let style = style.merge(superiorTo: [.textAlignment(.center), .font(.systemFont(ofSize: 40))])
         label = style <- [.textColor(.red)] //default textColor
         super.init(frame: .zero)
         compose(with: style)

@@ -1866,7 +1866,6 @@ extension AssociatedValueStrippable {
             case pageIndicatorTintColor
             case currentPageIndicatorTintColor
 
-
         } 
 
         extension ViewAttributeStripped {
@@ -2213,6 +2212,7 @@ extension AssociatedValueStrippable {
         				return .pageIndicatorTintColor
         			 case .currentPageIndicatorTintColor:
         				return .currentPageIndicatorTintColor
+                    default: fatalError("This should have been handled")
         		}
         	}
         }

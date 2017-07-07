@@ -15,18 +15,18 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeCountMasterArray() {
         let attr1: ViewStyle = [.text(text), .color(color)]
         let attr2: [ViewAttribute] = [.hidden(isHidden)]
-        let mergeMaster2 = attr1.merge(master: attr2)
+        let mergeMaster2 = attr1.merge(overwrittenBy: attr2)
         XCTAssert(mergeMaster2.count == 3)
-        let mergeMaster1 = attr2.merge(master: attr1)
+        let mergeMaster1 = attr2.merge(overwrittenBy: attr1)
         XCTAssert(mergeMaster1.count == 3)
     }
 
     func testMergeCountSlaveArray() {
         let attr1: ViewStyle = [.text(text), .color(color)]
         let attr2: [ViewAttribute] = [.hidden(isHidden)]
-        let mergeSlave2 = attr1.merge(slave: attr2)
+        let mergeSlave2 = attr1.merge(superiorTo: attr2)
         XCTAssert(mergeSlave2.count == 3)
-        let mergeSlave1 = attr2.merge(slave: attr1)
+        let mergeSlave1 = attr2.merge(superiorTo: attr1)
         XCTAssert(mergeSlave1.count == 3)
     }
     
@@ -52,10 +52,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeStyleWithArray() {
         let fooStyle: ViewStyle = [.text(fooText), .color(color)]
         let barAttr: [ViewAttribute] = [.text(barText), .hidden(isHidden)]
-        let fooMasterUsingSlave = fooStyle.merge(slave: barAttr)
-        let fooMasterUsingMaster = barAttr.merge(master: fooStyle)
-        let barMasterUsingSlave = barAttr.merge(slave: fooStyle)
-        let barMasterUsingMaster = fooStyle.merge(master: barAttr)
+        let fooMasterUsingSlave = fooStyle.merge(superiorTo: barAttr)
+        let fooMasterUsingMaster = barAttr.merge(overwrittenBy: fooStyle)
+        let barMasterUsingSlave = barAttr.merge(superiorTo: fooStyle)
+        let barMasterUsingMaster = fooStyle.merge(overwrittenBy: barAttr)
         let attrs = [fooMasterUsingSlave, fooMasterUsingMaster, barMasterUsingSlave, barMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 3)
@@ -92,10 +92,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testStyleWithArrayTwoDoublets() {
         let fooStyle: ViewStyle = [.text(fooText), .cornerRadius(fooRadius)]
         let barAttr: [ViewAttribute] = [.text(barText), .cornerRadius(barRadius)]
-        let fooMasterUsingSlave = fooStyle.merge(slave: barAttr)
-        let fooMasterUsingMaster = barAttr.merge(master: fooStyle)
-        let barMasterUsingSlave = barAttr.merge(slave: fooStyle)
-        let barMasterUsingMaster = fooStyle.merge(master: barAttr)
+        let fooMasterUsingSlave = fooStyle.merge(superiorTo: barAttr)
+        let fooMasterUsingMaster = barAttr.merge(overwrittenBy: fooStyle)
+        let barMasterUsingSlave = barAttr.merge(superiorTo: fooStyle)
+        let barMasterUsingMaster = fooStyle.merge(overwrittenBy: barAttr)
         let attrs = [fooMasterUsingSlave, fooMasterUsingMaster, barMasterUsingSlave, barMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 2)
@@ -141,10 +141,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeStyleWithEmptyArray() {
         let fooStyle: ViewStyle = [.text(fooText), .cornerRadius(fooRadius)]
         let barAttr: [ViewAttribute] = []
-        let fooMasterUsingSlave = fooStyle.merge(slave: barAttr)
-        let fooMasterUsingMaster = barAttr.merge(master: fooStyle)
-        let barMasterUsingSlave = barAttr.merge(slave: fooStyle)
-        let barMasterUsingMaster = fooStyle.merge(master: barAttr)
+        let fooMasterUsingSlave = fooStyle.merge(superiorTo: barAttr)
+        let fooMasterUsingMaster = barAttr.merge(overwrittenBy: fooStyle)
+        let barMasterUsingSlave = barAttr.merge(superiorTo: fooStyle)
+        let barMasterUsingMaster = fooStyle.merge(overwrittenBy: barAttr)
         let attrs = [fooMasterUsingSlave, fooMasterUsingMaster, barMasterUsingSlave, barMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 2)
@@ -174,10 +174,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeStyleWithSingleAttribute() {
         let style: ViewStyle = [.text(fooText), .cornerRadius(fooRadius)]
         let single: ViewAttribute = .color(color)
-        let arrayIsMasterUsingSlave = style.merge(slave: single)
-        let arrayIsMasterUsingMaster = single.merge(master: style)
-        let singleAttributeIsMasterUsingSlave = single.merge(slave: style)
-        let singleAttributeIsMasterUsingMaster = style.merge(master: single)
+        let arrayIsMasterUsingSlave = style.merge(superiorTo: single)
+        let arrayIsMasterUsingMaster = single.merge(overwrittenBy: style)
+        let singleAttributeIsMasterUsingSlave = single.merge(superiorTo: style)
+        let singleAttributeIsMasterUsingMaster = style.merge(overwrittenBy: single)
         let attrs = [arrayIsMasterUsingSlave, arrayIsMasterUsingMaster, singleAttributeIsMasterUsingSlave, singleAttributeIsMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 3)
@@ -211,10 +211,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeEmptyStyleWithSingleAttribute() {
         let style: ViewStyle = []
         let single: ViewAttribute = .text(fooText)
-        let styleIsMasterUsingSlave = style.merge(slave: single)
-        let styleIsMasterUsingMaster = single.merge(master: style)
-        let singleAttributeIsMasterUsingSlave = single.merge(slave: style)
-        let singleAttributeIsMasterUsingMaster = style.merge(master: single)
+        let styleIsMasterUsingSlave = style.merge(superiorTo: single)
+        let styleIsMasterUsingMaster = single.merge(overwrittenBy: style)
+        let singleAttributeIsMasterUsingSlave = single.merge(superiorTo: style)
+        let singleAttributeIsMasterUsingMaster = style.merge(overwrittenBy: single)
         let attrs = [styleIsMasterUsingSlave, styleIsMasterUsingMaster, singleAttributeIsMasterUsingSlave, singleAttributeIsMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 1)
@@ -241,10 +241,10 @@ class MergeResultingInViewStyleTests: XCTestCase {
     func testMergeStyleWithSingleAttributeDoublets() {
         let fooStyle: ViewStyle = [.text(fooText), .cornerRadius(fooRadius)]
         let barSingle: ViewAttribute = .text(barText)
-        let fooIsMasterUsingSlave = fooStyle.merge(slave: barSingle)
-        let fooIsMasterUsingMaster = barSingle.merge(master: fooStyle)
-        let barAttributeIsMasterUsingSlave = barSingle.merge(slave: fooStyle)
-        let barAttributeIsMasterUsingMaster = fooStyle.merge(master: barSingle)
+        let fooIsMasterUsingSlave = fooStyle.merge(superiorTo: barSingle)
+        let fooIsMasterUsingMaster = barSingle.merge(overwrittenBy: fooStyle)
+        let barAttributeIsMasterUsingSlave = barSingle.merge(superiorTo: fooStyle)
+        let barAttributeIsMasterUsingMaster = fooStyle.merge(overwrittenBy: barSingle)
         let attrs = [fooIsMasterUsingSlave, fooIsMasterUsingMaster, barAttributeIsMasterUsingSlave, barAttributeIsMasterUsingMaster]
         for attributes in attrs {
             XCTAssert(attributes.count == 2)

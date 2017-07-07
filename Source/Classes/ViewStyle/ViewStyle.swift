@@ -11,12 +11,10 @@ import UIKit
 public struct ViewStyle: Attributed {
     public typealias Attribute = ViewAttribute
     public typealias Element = ViewAttribute
-    public static var mergeInterceptors: [MergeInterceptor.Type] = []
-    public static var duplicatesHandler: AnyDuplicatesHandler<ViewStyle>?
-    
+        
     public var startIndex: Int = 0
     
-    public let attributes: [ViewAttribute]
+    public var attributes: [ViewAttribute]
     
     public init(attributes: [ViewAttribute]) {
         self.attributes = attributes

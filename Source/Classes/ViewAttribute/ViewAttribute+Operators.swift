@@ -11,12 +11,12 @@ import Foundation
 //MARK: RHS `[ViewAttribute]`
 // RHS MASTER
 public func <<- (lhs: [ViewAttribute], rhs: [ViewAttribute]) -> ViewStyle {
-    return lhs.merge(master: rhs)
+    return lhs.merge(overwrittenBy: rhs)
 }
 
 // RHS SLAVE
 public func <- (lhs: [ViewAttribute], rhs: [ViewAttribute]) -> ViewStyle {
-    return lhs.merge(slave: rhs)
+    return lhs.merge(superiorTo: rhs)
 }
 
 //MARK: RHS `ViewAttribute`

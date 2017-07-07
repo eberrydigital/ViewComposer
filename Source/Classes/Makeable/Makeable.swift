@@ -39,7 +39,7 @@ extension Makeable {
     
     /// Allows for use of static instatiation like this: `UIButton.make([.text("foo"), .textColor(.red)])`
     public static func make(_ attributes: [Style.Attribute]) -> Styled {
-        let style: Style = attributes.merge(slave: []) // do not allow duplicates
+        let style: Style = attributes.merge(superiorTo: []) // do not allow duplicates
         return make(style)
     }
     

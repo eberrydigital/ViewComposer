@@ -16,7 +16,7 @@ final class TriangleView: UIView, Composable {
     
     let style: ViewStyle
     init(_ style: ViewStyle? = nil) {
-        let style = style.merge(slave: .default)
+        let style = style.merge(superiorTo: .default)
         self.style = style
         super.init(frame: .zero)
         compose(with: style)
@@ -91,9 +91,9 @@ extension ViewStyle: CustomAttributeMerger {
 }
 
 private extension Optional where Wrapped == ViewStyle, Wrapped: CustomAttributeMerger {
-    func merge(slave: Wrapped) -> Wrapped {
+    func merge(superiorTo: Wrapped) -> Wrapped {
         guard let `self` = self else { return slave }
-        return self.customMerge(slave: slave, into: self)
+        return self.custommerge(superiorTo: yielding, into: self)
     }
 }
 

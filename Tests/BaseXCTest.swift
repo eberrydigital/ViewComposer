@@ -35,7 +35,6 @@ func assertIs<Value: Equatable>(_ optional: Value?, `is` expected: Value) {
 class BaseXCTest: XCTestCase {
     
     override func setUp() {
-        ViewStyle.mergeInterceptors = []
-        ViewStyle.duplicatesHandler = nil
+        AttributesMerger.removeAllMergers()
     }
 }

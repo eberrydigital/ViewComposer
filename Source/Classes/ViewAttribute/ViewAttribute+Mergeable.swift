@@ -9,28 +9,28 @@
 import Foundation
 
 extension ViewAttribute {
-    func merge(master: ViewStyle) -> ViewStyle {
-        return self <<- master
+    func merge(overwrittenBy dominant: ViewStyle) -> ViewStyle {
+        return self <<- dominant
     }
     
-    func merge(master: [ViewAttribute]) -> ViewStyle {
-        return self <<- master
+    func merge(overwrittenBy dominant: [ViewAttribute]) -> ViewStyle {
+        return self <<- dominant
     }
     
-    func merge(master: ViewAttribute) -> ViewStyle {
-        return self <<- master
+    func merge(overwrittenBy dominant: ViewAttribute) -> ViewStyle {
+        return self <<- dominant
     }
     
-    func merge(slave: ViewStyle) -> ViewStyle {
-        return self <- slave
+    func merge(superiorTo yielding: ViewStyle) -> ViewStyle {
+        return self <- yielding
     }
     
-    func merge(slave: [ViewAttribute]) -> ViewStyle {
-        return self <- slave
+    func merge(superiorTo yielding: [ViewAttribute]) -> ViewStyle {
+        return self <- yielding
     }
     
-    func merge(slave: ViewAttribute) -> ViewStyle {
-        return self <- slave
+    func merge(superiorTo yielding: ViewAttribute) -> ViewStyle {
+        return self <- yielding
     }
 }
 

@@ -1,14 +1,13 @@
 //
-//  Attributed+AssociatedValueEnumExtractor.swift
+//  ExpressibleByAttributes+AssociatedValueEnumExtractor.swift
 //  ViewComposer
 //
-//  Created by Alexander Cyon on 2017-06-06.
-//
+//  Created by Alexander Cyon on 2017-07-07.
 //
 
 import Foundation
 
-public extension Attributed {
+public extension ExpressibleByAttributes {
     func value<AssociatedValue>(_ stripped: Attribute.Stripped) -> AssociatedValue? {
         return attributes.associatedValue(stripped)
     }

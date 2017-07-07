@@ -9,7 +9,7 @@
 import Foundation
 
 public func <<- (lhs: ViewStyle?, rhs: ViewAttribute) -> ViewStyle {
-    return lhs.merge(master: ViewStyle([rhs]))
+    return lhs.merge(overwrittenBy: ViewStyle([rhs]))
 }
 
 public func <<- (lhs: ViewAttribute, rhs: ViewStyle?) -> ViewStyle {
@@ -17,7 +17,7 @@ public func <<- (lhs: ViewAttribute, rhs: ViewStyle?) -> ViewStyle {
 }
 
 public func <- (lhs: ViewStyle?, rhs: ViewAttribute) -> ViewStyle {
-    return lhs.merge(slave: ViewStyle([rhs]))
+    return lhs.merge(superiorTo: ViewStyle([rhs]))
 }
 
 public func <- (lhs: ViewAttribute, rhs: ViewStyle?) -> ViewStyle {

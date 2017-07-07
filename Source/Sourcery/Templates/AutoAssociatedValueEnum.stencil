@@ -75,7 +75,6 @@ extension AssociatedValueStrippable {
             {% for case in enum.cases %}case {{ case.name }}
             {% endfor %}
 
-
         } 
 
         extension {{ enum.name }}Stripped {
@@ -98,6 +97,7 @@ extension AssociatedValueStrippable {
         			{% for case in enum.cases %} case .{{ case.name }}:
         				return .{{ case.name }}
         			{% endfor %}
+                    default: fatalError("This should have been handled")
         		}
         	}
         }

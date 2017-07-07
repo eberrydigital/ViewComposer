@@ -13,7 +13,7 @@ open class TextView: UITextView, Composable {
     open let style: ViewStyle
     
     required public init(_ style: ViewStyle? = nil) {
-        let style = style.merge(slave: .default)
+        let style = style.merge(superiorTo: .default)
         self.style = style
         super.init(frame: .zero, textContainer: nil)
         compose(with: style)

@@ -16,51 +16,51 @@ import Foundation
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed>(lhs: A, rhs: A) -> A {
-    return lhs.merge(master: rhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: E, rhs: E) -> E {
+    return lhs.merge(overwrittenBy: rhs)
 }
 
-public func <<- <A: Attributed>(lhs: A?, rhs: A) -> A {
-    return lhs.merge(master: rhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: E?, rhs: E) -> E {
+    return lhs.merge(overwrittenBy: rhs)
 }
 
-public func <<- <A: Attributed>(lhs: A, rhs: A?) -> A {
-    return rhs.merge(slave: lhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: E, rhs: E?) -> E {
+    return rhs.merge(superiorTo: lhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed>(lhs: A, rhs: A) -> A {
-    return lhs.merge(slave: rhs)
+public func <- <E: ExpressibleByAttributes>(lhs: E, rhs: E) -> E {
+    return lhs.merge(superiorTo: rhs)
 }
 
-public func <- <A: Attributed>(lhs: A?, rhs: A) -> A {
-    return lhs.merge(slave: rhs)
+public func <- <E: ExpressibleByAttributes>(lhs: E?, rhs: E) -> E {
+    return lhs.merge(superiorTo: rhs)
 }
 
-public func <- <A: Attributed>(lhs: A, rhs: A?) -> A {
-    return rhs.merge(master: lhs)
+public func <- <E: ExpressibleByAttributes>(lhs: E, rhs: E?) -> E {
+    return rhs.merge(overwrittenBy: lhs)
 }
 
 //MARK: RHS `[Attributed.Attribute]`
 // RHS MASTER
-public func <<- <A: Attributed>(lhs: A, rhs: [A.Attribute]) -> A {
-    return lhs.merge(master: rhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: E, rhs: [E.Attribute]) -> E {
+    return lhs.merge(overwrittenBy: rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed>(lhs: A, rhs: [A.Attribute]) -> A {
-    return lhs.merge(slave: rhs)
+public func <- <E: ExpressibleByAttributes>(lhs: E, rhs: [E.Attribute]) -> E {
+    return lhs.merge(superiorTo: rhs)
 }
 
 //MARK: RHS `Attributed.Attribute`
 // RHS MASTER
-public func <<- <A: Attributed>(lhs: A, rhs: A.Attribute) -> A {
-    return lhs.merge(master: [rhs])
+public func <<- <E: ExpressibleByAttributes>(lhs: E, rhs: E.Attribute) -> E {
+    return lhs.merge(overwrittenBy: [rhs])
 }
 
 // RHS SLAVE
-public func <- <A: Attributed>(lhs: A, rhs: A.Attribute) -> A {
-    return lhs.merge(slave: [rhs])
+public func <- <E: ExpressibleByAttributes>(lhs: E, rhs: E.Attribute) -> E {
+    return lhs.merge(superiorTo: [rhs])
 }
 
 ////////////////////////////////////////////////
@@ -71,13 +71,13 @@ public func <- <A: Attributed>(lhs: A, rhs: A.Attribute) -> A {
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed>(lhs: [A.Attribute], rhs: A) -> A {
-    return lhs.merge(master: rhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: [E.Attribute], rhs: E) -> E {
+    return lhs.merge(overwrittenBy: rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed>(lhs: [A.Attribute], rhs: A) -> A {
-    return lhs.merge(slave: rhs)
+public func <- <E: ExpressibleByAttributes>(lhs: [E.Attribute], rhs: E) -> E {
+    return lhs.merge(superiorTo: rhs)
 }
 
 //////////////////////////////////////////////////////////
@@ -88,11 +88,11 @@ public func <- <A: Attributed>(lhs: [A.Attribute], rhs: A) -> A {
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed>(lhs: A.Attribute, rhs: A) -> A {
-    return rhs.merge(slave: lhs)
+public func <<- <E: ExpressibleByAttributes>(lhs: E.Attribute, rhs: E) -> E {
+    return rhs.merge(superiorTo: lhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed>(lhs: A.Attribute, rhs: A) -> A {
-    return rhs.merge(master: lhs)
+public func <- <E: ExpressibleByAttributes>(lhs: E.Attribute, rhs: E) -> E {
+    return rhs.merge(overwrittenBy: lhs)
 }

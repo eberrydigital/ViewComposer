@@ -1,8 +1,8 @@
 //
-//  MergeOperatorReturningComposable.swift
-//  ViewComposer
+// MergeOperatorReturningComposable.swift
+// ViewComposer
 //
-//  Created by Alexander Cyon on 2017-06-04.
+// Created by Alexander Cyon on 2017-06-04.
 //
 //
 
@@ -18,34 +18,34 @@ import Foundation
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed, C: Composable>(lhs: A, rhs: A) -> C where C.Style == A {
+public func <<- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: E) -> C where C.Style == E {
     return C(lhs <<- rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed, C: Composable>(lhs: A, rhs: A) -> C where C.Style == A {
+public func <- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: E) -> C where C.Style == E {
     return C(lhs <- rhs)
 }
 
 //MARK: RHS `[Attributed.Attribute]`
 // RHS MASTER
-public func <<- <A: Attributed, C: Composable>(lhs: A, rhs: [A.Attribute]) -> C where C.Style == A {
+public func <<- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: [E.Attribute]) -> C where C.Style == E {
     return C(lhs <<- rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed, C: Composable>(lhs: A, rhs: [A.Attribute]) -> C where C.Style == A {
+public func <- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: [E.Attribute]) -> C where C.Style == E {
     return C(lhs <- rhs)
 }
 
 //MARK: RHS `Attributed.Attribute`
 // RHS MASTER
-public func <<- <A: Attributed, C: Composable>(lhs: A, rhs: A.Attribute) -> C where C.Style == A {
+public func <<- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: E.Attribute) -> C where C.Style == E {
     return C(lhs <<- rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed, C: Composable>(lhs: A, rhs: A.Attribute) -> C where C.Style == A {
+public func <- <E: ExpressibleByAttributes, C: Composable>(lhs: E, rhs: E.Attribute) -> C where C.Style == E {
     return C(lhs <- rhs)
 }
 
@@ -59,12 +59,12 @@ public func <- <A: Attributed, C: Composable>(lhs: A, rhs: A.Attribute) -> C whe
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed, C: Composable>(lhs: [A.Attribute], rhs: A) -> C where C.Style == A {
+public func <<- <E: ExpressibleByAttributes, C: Composable>(lhs: [E.Attribute], rhs: E) -> C where C.Style == E {
     return C(lhs <<- rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed, C: Composable>(lhs: [A.Attribute], rhs: A) -> C where C.Style == A {
+public func <- <E: ExpressibleByAttributes, C: Composable>(lhs: [E.Attribute], rhs: E) -> C where C.Style == E {
     return C(lhs <- rhs)
 }
 
@@ -78,11 +78,11 @@ public func <- <A: Attributed, C: Composable>(lhs: [A.Attribute], rhs: A) -> C w
 
 //MARK: RHS `Attributed`
 // RHS MASTER
-public func <<- <A: Attributed, C: Composable>(lhs: A.Attribute, rhs: A) -> C where C.Style == A {
+public func <<- <E: ExpressibleByAttributes, C: Composable>(lhs: E.Attribute, rhs: E) -> C where C.Style == E {
     return C([lhs] <<- rhs)
 }
 
 // RHS SLAVE
-public func <- <A: Attributed, C: Composable>(lhs: A.Attribute, rhs: A) -> C where C.Style == A {
+public func <- <E: ExpressibleByAttributes, C: Composable>(lhs: E.Attribute, rhs: E) -> C where C.Style == E {
     return C([lhs] <- rhs)
 }

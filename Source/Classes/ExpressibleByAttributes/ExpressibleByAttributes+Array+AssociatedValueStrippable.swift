@@ -1,9 +1,8 @@
 //
-//  Attributed+Array+Mergeable.swift
+//  ExpressibleByAttributes+Array+AssociatedValueStrippable.swift
 //  ViewComposer
 //
-//  Created by Alexander Cyon on 2017-06-06.
-//
+//  Created by Alexander Cyon on 2017-07-07.
 //
 
 import Foundation
@@ -16,13 +15,5 @@ public extension Array where Element: AssociatedValueStrippable {
             filtered.append(attribute)
         }
         return filtered
-    }
-    
-    func merge<A: Attributed>(slave: A) -> A where A.Attribute == Element {
-        return A(self).merge(slave: slave)
-    }
-    
-    func merge<A: Attributed>(master: A) -> A where A.Attribute == Element {
-        return A(self).merge(master: master)
     }
 }

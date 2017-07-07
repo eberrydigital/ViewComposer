@@ -9,20 +9,20 @@
 import Foundation
 
 public extension Array where Element == ViewAttribute {
-    func merge(master: [ViewAttribute]) -> ViewStyle {
-        return ViewStyle(self).merge(master: master)
+    func merge(overwrittenBy dominant: [ViewAttribute]) -> ViewStyle {
+        return ViewStyle(self).merge(overwrittenBy: dominant)
     }
     
-    func merge(master: ViewAttribute) -> ViewStyle {
-        return merge(master: [master])
+    func merge(overwrittenBy dominant: ViewAttribute) -> ViewStyle {
+        return merge(overwrittenBy: [dominant])
     }
     
-    func merge(slave: [ViewAttribute]) -> ViewStyle {
-        return ViewStyle(self).merge(slave: slave)
+    func merge(superiorTo yielding: [ViewAttribute]) -> ViewStyle {
+        return ViewStyle(self).merge(superiorTo: yielding)
     }
     
-    func merge(slave: ViewAttribute) -> ViewStyle {
-        return merge(slave: [slave])
+    func merge(superiorTo yielding: ViewAttribute) -> ViewStyle {
+        return merge(superiorTo: [yielding])
     }
     
 }
