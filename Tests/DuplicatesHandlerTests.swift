@@ -11,8 +11,23 @@ import Foundation
 import XCTest
 @testable import ViewComposer
 class DuplicatesHandlerTests: BaseXCTest {
+    
+    override func setUp() {
+        super.setUp()
+        
+        let typeErasedhandler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>
+        
+        let handler = ViewStyleDuplicatesHandler<FooBarViewStyle>() { (baseAttributed: BaseAttributed) in
+            return baseAttributed as? FooBarViewStyle
+        }
+        
+        typeErasedhandler = AnyViewStyleDuplicatesHandler(handler)
+
+        DuplicatesHandler.shared.handler = typeErasedhandler
+    }
+    
     func testCustomAttributeDuplicatesInstantiation() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
+        
         let bar = 237
         let style: ViewStyle = [.foo(fooText), .bar(bar)]
         guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
@@ -22,7 +37,7 @@ class DuplicatesHandlerTests: BaseXCTest {
     }
     
     func testMakeableDuplicatesHandlerAlongSideStandardAttributes() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
+        
         let bar = 237
         let field: UITextField = [.foo(fooText), .bar(bar), .color(.red), .cornerRadius(cornerRadius)]
         assertIs(field.placeholder, is: fooText)
@@ -33,19 +48,3 @@ class DuplicatesHandlerTests: BaseXCTest {
     }
 }
 
-struct FoobarViewAttributeDuplicatesHandler: DuplicatesHandler {
-    typealias AttributesExpressible = ViewStyle
-    func choseDuplicate(from duplicates: [ViewAttribute]) -> ViewAttribute {
-        var foobarAttributes: [FooBarViewAttribute] = []
-        for duplicate in duplicates {
-            switch duplicate {
-            case .custom(let custom):
-                guard let foobarStyle = custom as? FooBarViewStyle else { continue }
-                foobarAttributes.append(contentsOf: foobarStyle.attributes)
-            default:
-                continue
-            }
-        }
-        return ViewAttribute.custom(FooBarViewStyle(foobarAttributes))
-    }
-}

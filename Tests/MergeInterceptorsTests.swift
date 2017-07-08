@@ -12,9 +12,8 @@ import XCTest
 @testable import ViewComposer
 
 class MergeInterceptorsTests: BaseXCTest {
-        
+    
     func testCustomAttributeMergingOperator() {
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let baseStyle: ViewStyle = [.foo(fooText)]
         let style: ViewStyle = baseStyle <<- .bar(bar)
         guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
@@ -24,7 +23,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testCustomAttributeMergingIntercepting() {
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let baseStyle: ViewStyle = [.foo(fooText)]
         let style: ViewStyle = baseStyle.merge(overwrittenBy: .bar(bar))
         guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
@@ -33,20 +31,8 @@ class MergeInterceptorsTests: BaseXCTest {
         XCTAssert(foobarViewStyle.value(.foo) == fooText)
     }
     
-    
     let bar = 237
-    func testCustomAttributeMergingNotIntercepting() {
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
-        let baseStyle: ViewStyle = [.foo(fooText)]
-        let style: ViewStyle = baseStyle.merge(overwrittenBy: .bar(bar), intercept: false)
-        guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
-        XCTAssert(foobarViewStyle.count == 1)
-        XCTAssert(foobarViewStyle.value(.bar) == bar)
-    }
-    
     func testMasterMergeBetweenEmptyArrayAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty.merge(overwrittenBy: [.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -56,8 +42,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeBetweenEmptyStyleAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]).merge(overwrittenBy: [.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -66,8 +50,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeBetweenEmptyArrayAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty.merge(overwrittenBy: ViewStyle([.bar(bar), .foo(fooText)]))
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -77,8 +59,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeBetweenEmptyStyleAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]).merge(overwrittenBy: ViewStyle([.bar(bar), .foo(fooText)]))
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -87,19 +67,7 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     //Using slave
-    func testSlaveCustomAttributeMergingNotIntercepting() {
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
-        let baseStyle: ViewStyle = [.foo(fooText)]
-        let style: ViewStyle = baseStyle.merge(superiorTo: .bar(bar), intercept: false)
-        print("style: `\(style)`")
-        guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
-        XCTAssert(foobarViewStyle.count == 1)
-        XCTAssert(foobarViewStyle.value(.foo) == fooText)
-    }
-    
     func testSlaveMergeBetweenEmptyArrayAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty.merge(superiorTo: [.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -109,8 +77,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeBetweenEmptyStyleAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]).merge(superiorTo: [.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -119,8 +85,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeBetweenEmptyArrayAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty.merge(superiorTo: ViewStyle([.bar(bar), .foo(fooText)]))
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -130,8 +94,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeBetweenEmptyStyleAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]).merge(superiorTo: ViewStyle([.bar(bar), .foo(fooText)]))
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -141,8 +103,6 @@ class MergeInterceptorsTests: BaseXCTest {
     
     //MARK: - Using operators
     func testMasterMergeOperatorBetweenEmptyArrayAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty <<- [.bar(bar), .foo(fooText)]
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -152,8 +112,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeOperatorBetweenEmptyStyleAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]) <<- [.bar(bar), .foo(fooText)]
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -162,8 +120,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeOperatorBetweenEmptyArrayAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty <<- ViewStyle([.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -173,8 +129,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testMasterMergeOperatorBetweenEmptyStyleAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]) <<- ViewStyle([.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -184,8 +138,6 @@ class MergeInterceptorsTests: BaseXCTest {
     
     //Using slave
     func testSlaveMergeOperatorBetweenEmptyArrayAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty <- [.bar(bar), .foo(fooText)]
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -195,8 +147,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeOperatorBetweenEmptyStyleAndDuplicatedCustomAttributesArray() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]) <- [.bar(bar), .foo(fooText)]
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -205,8 +155,6 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeOperatorBetweenEmptyArrayAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let empty = [ViewAttribute]()
         let merged: ViewStyle = empty <- ViewStyle([.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
@@ -216,19 +164,15 @@ class MergeInterceptorsTests: BaseXCTest {
     }
     
     func testSlaveMergeOperatorBetweenEmptyStyleAndDuplicatedCustomAttributesStyle() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle = ViewStyle([]) <- ViewStyle([.bar(bar), .foo(fooText)])
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
         XCTAssert(style.value(.bar) == bar)
         XCTAssert(style.value(.foo) == fooText)
     }
-
+    
     //MARK Single operator
     func testMasterMergeOperatorBetweenSingleAttributes() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle =  .bar(bar) <<- .foo(fooText)
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -238,8 +182,6 @@ class MergeInterceptorsTests: BaseXCTest {
     
     //using slave
     func testSlaveMergeOperatorBetweenSingleAttributes() {
-        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(FoobarViewAttributeDuplicatesHandler())
-        ViewStyle.mergeInterceptors.append(FooBarViewAttributeMerger.self)
         let merged: ViewStyle =  .bar(bar) <- .foo(fooText)
         guard let style: FooBarViewStyle = merged.value(.custom) else { XCTAssert(false); return }
         XCTAssert(style.count == 2)
@@ -254,17 +196,29 @@ class MergeInterceptorsTests: BaseXCTest {
     }
 }
 
-struct FooBarViewAttributeMerger: MergeInterceptor {
-    static func interceptMerge<A>(dominant dominantAttributed: A, yielding yieldingAttributed: A) -> A where A : Attributed {
+struct FooBarViewAttributeMerger: AttributesMergable {
+    
+    static func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E {
         guard
-            let master = dominantAttributed as? ViewStyle,
-            let slave = yieldingAttributed as? ViewStyle,
-            let dominantFooBar: FooBarViewStyle = master.value(.custom),
-            let yieldingFooBar: FooBarViewStyle = slave.value(.custom)
-            else { return dominantAttributed.merge(yieldingAttributed, prefer: .left, intercept: false) }
-        let merged = dominantFooBar.merge(yieldingFooBar, prefer: .left, intercept: false)
-        return ViewStyle([.custom(merged)]) as! A
+            let dominantViewStyle = dominant as? ViewStyle,
+            let yieldingViewStyle = yielding as? ViewStyle,
+            let dominantFooBar: FooBarViewStyle = dominantViewStyle.value(.custom),
+            let yieldingFooBar: FooBarViewStyle = yieldingViewStyle.value(.custom)
+            else { return dominant.merge(superiorTo: yielding) } //intercept: false
+        let merged = dominantFooBar.merge(superiorTo: yieldingFooBar) //intercept: false
+        return ViewStyle([.custom(merged)]) as! E
     }
+    
+    //    static func interceptMerge<A>(dominant dominantAttributed: A, yielding yieldingAttributed: A) -> A where A : Attributed {
+    //        guard
+    //            let master = dominantAttributed as? ViewStyle,
+    //            let slave = yieldingAttributed as? ViewStyle,
+    //            let dominantFooBar: FooBarViewStyle = master.value(.custom),
+    //            let yieldingFooBar: FooBarViewStyle = slave.value(.custom)
+    //            else { return dominantAttributed.merge(yieldingAttributed, prefer: .left, intercept: false) }
+    //        let merged = dominantFooBar.merge(yieldingFooBar, prefer: .left, intercept: false)
+    //        return ViewStyle([.custom(merged)]) as! A
+    //    }
 }
 
 public enum FooBarViewAttribute {
@@ -308,11 +262,9 @@ extension ViewAttribute {
 }
 
 public struct FooBarViewStyle: Attributed {
-    public static var mergeInterceptors: [MergeInterceptor.Type] = []
-    public static var duplicatesHandler: AnyDuplicatesHandler<FooBarViewStyle>?
     
     public var startIndex: Int = 0
-    public let attributes: [FooBarViewAttribute]
+    public var attributes: [FooBarViewAttribute]
     
     public init(attributes: [FooBarViewAttribute]) {
         self.attributes = attributes

@@ -9,12 +9,7 @@ import Foundation
 
 public final class DuplicatesHandler {
     public static var shared = DuplicatesHandler()
-    public var customAttributed: AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>.Type?
-    public var handler: DuplicatesHandling.Type?
-    private static var handler: DuplicatesHandling.Type? {
-        get { return shared.handler }
-        set { shared.handler = newValue }
-    }
+    public var handler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>?
 }
 
 extension ExpressibleByAttributes {
@@ -24,10 +19,12 @@ extension ExpressibleByAttributes {
     // the DuplicatesHandler if any, or the default one.
     static func choseDuplicate(from duplicates: [Attribute]) -> Attribute? {
         guard
-            let handler = DuplicatesHandler.shared.handler,
-            let customAttributed = DuplicatesHandler.shared.customAttributed
+            let viewAttributes = duplicates as? [ViewAttribute],
+            let handler = DuplicatesHandler.shared.handler
             else { return duplicates.first }
-        return handler.choseDuplicate(from: duplicates, anyCustomAttributed: customAttributed)
+        //swiftlint:disable force_cast
+        let chosenAttribute = handler.choseAttributeFromDuplicates(viewAttributes)
+        return chosenAttribute as? Attribute
     }
     
     /// Transforms `[ A*: [A(1), A(2), A(7)], C*: [C(2), C(1)] ]` to `[A(x), C(y)]` where `x` and `y` are the
