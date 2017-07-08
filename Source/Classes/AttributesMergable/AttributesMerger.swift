@@ -8,7 +8,9 @@
 import Foundation
 
 public final class AttributesMerger: AttributesMergable {
+    
     public static var shared = AttributesMerger()
+    
     private var mergers: [AttributesMergable.Type] = [DefaultMerger.self]
     private static var mergers: [AttributesMergable.Type] {
         get { return shared.mergers }

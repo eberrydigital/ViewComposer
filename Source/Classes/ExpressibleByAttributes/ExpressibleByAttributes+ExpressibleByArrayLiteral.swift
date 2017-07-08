@@ -9,7 +9,7 @@ import Foundation
 
 extension ExpressibleByAttributes {
     public init(arrayLiteral elements: Attribute...) {
-        self.init(removeDuplicatesIfNeededAndAble(elements))
+        self.init(Self.removeDuplicatesIfNeededAndAble(elements))
     }
 }
 

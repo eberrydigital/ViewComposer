@@ -13,18 +13,15 @@ public protocol ExpressibleByAttributes: BaseAttributed, ExpressibleByArrayLiter
     /// accessing the value associated to a certain attribute. e.g. the `UIColor` associated to the attribute `backgroundColor`
     associatedtype Attribute: AttributeType
     
-    //    init(attributes: [Attribute])
+    init(attributes: [Attribute])
     
     /// Attributes used to style some `Styleable` type
     var attributes: [Attribute] { get set }
 }
 
 extension ExpressibleByAttributes {
-    public init(_ attributes: [Attribute]) {
-        self.init(removeDuplicatesIfNeededAndAble(attributes))
+    public init(_ elements: [Attribute]) {
+        self.init(attributes: Self.removeDuplicatesIfNeededAndAble(elements))
     }
 }
 
-func removeDuplicatesIfNeededAndAble<A: AttributeType>(_ duplicates: [A]) -> [A] {
-    DuplicatesHandlerManager.
-}

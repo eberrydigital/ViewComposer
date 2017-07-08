@@ -102,6 +102,7 @@
 		48594C401EF06F8F0058594B /* UIProgressView+Makeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48594C3F1EF06F8F0058594B /* UIProgressView+Makeable.swift */; };
 		48594C421EF072770058594B /* UIPageControl+Makeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48594C411EF072770058594B /* UIPageControl+Makeable.swift */; };
 		48594C441EF072880058594B /* UIActivityIndicatorView+Makeable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48594C431EF072880058594B /* UIActivityIndicatorView+Makeable.swift */; };
+		485F296B1F10CEC900C21394 /* AnyStrippedRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485F296A1F10CEC900C21394 /* AnyStrippedRepresentation.swift */; };
 		486217841EFC0EDD0000FB1F /* UIControl+ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486217831EFC0EDD0000FB1F /* UIControl+ViewStyle.swift */; };
 		4875EC9B1F0A77CB00A9D680 /* TextInputTraitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4875EC9A1F0A77CB00A9D680 /* TextInputTraitable.swift */; };
 		48FD21E61F005B0E0074EAAB /* UITableView+ViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FD21E51F005B0E0074EAAB /* UITableView+ViewStyle.swift */; };
@@ -112,7 +113,6 @@
 		48FF4CEC1F0FC19300864F73 /* AssociatedValueStrippable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CEB1F0FC19300864F73 /* AssociatedValueStrippable.swift */; };
 		48FF4CEF1F0FC1B800864F73 /* DuplicatesHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CEE1F0FC1B800864F73 /* DuplicatesHandling.swift */; };
 		48FF4CF11F0FC1D000864F73 /* DuplicatesHandlerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CF01F0FC1D000864F73 /* DuplicatesHandlerManager.swift */; };
-		48FF4CF31F0FC1EA00864F73 /* AnyDuplicatesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CF21F0FC1EA00864F73 /* AnyDuplicatesHandler.swift */; };
 		48FF4CF61F0FC23000864F73 /* ExpressibleByAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CF51F0FC23000864F73 /* ExpressibleByAttributes.swift */; };
 		48FF4CF81F0FC25D00864F73 /* AnyExpressibleByAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CF71F0FC25800864F73 /* AnyExpressibleByAttributes.swift */; };
 		48FF4CFA1F0FC5AB00864F73 /* ExpressibleByAttributes+Array+AssociatedValueStrippable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FF4CF91F0FC5AB00864F73 /* ExpressibleByAttributes+Array+AssociatedValueStrippable.swift */; };
@@ -234,6 +234,7 @@
 		48594C3F1EF06F8F0058594B /* UIProgressView+Makeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Makeable.swift"; sourceTree = "<group>"; };
 		48594C411EF072770058594B /* UIPageControl+Makeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIPageControl+Makeable.swift"; sourceTree = "<group>"; };
 		48594C431EF072880058594B /* UIActivityIndicatorView+Makeable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Makeable.swift"; sourceTree = "<group>"; };
+		485F296A1F10CEC900C21394 /* AnyStrippedRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyStrippedRepresentation.swift; sourceTree = "<group>"; };
 		486217831EFC0EDD0000FB1F /* UIControl+ViewStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIControl+ViewStyle.swift"; sourceTree = "<group>"; };
 		48748A7F1EE5C31500E937E0 /* MergeOperatorReturningMakable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MergeOperatorReturningMakable.swift; sourceTree = "<group>"; };
 		48748A811EE5C4A600E937E0 /* MakeableFromStyleTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakeableFromStyleTests.swift; sourceTree = "<group>"; };
@@ -251,7 +252,6 @@
 		48FF4CEB1F0FC19300864F73 /* AssociatedValueStrippable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssociatedValueStrippable.swift; sourceTree = "<group>"; };
 		48FF4CEE1F0FC1B800864F73 /* DuplicatesHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesHandling.swift; sourceTree = "<group>"; };
 		48FF4CF01F0FC1D000864F73 /* DuplicatesHandlerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatesHandlerManager.swift; sourceTree = "<group>"; };
-		48FF4CF21F0FC1EA00864F73 /* AnyDuplicatesHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyDuplicatesHandler.swift; sourceTree = "<group>"; };
 		48FF4CF51F0FC23000864F73 /* ExpressibleByAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpressibleByAttributes.swift; sourceTree = "<group>"; };
 		48FF4CF71F0FC25800864F73 /* AnyExpressibleByAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyExpressibleByAttributes.swift; sourceTree = "<group>"; };
 		48FF4CF91F0FC5AB00864F73 /* ExpressibleByAttributes+Array+AssociatedValueStrippable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExpressibleByAttributes+Array+AssociatedValueStrippable.swift"; sourceTree = "<group>"; };
@@ -616,6 +616,7 @@
 			children = (
 				48FF4CEB1F0FC19300864F73 /* AssociatedValueStrippable.swift */,
 				48277A8D1F0FD85E002D3412 /* AnyAssociatedValueStrippable.swift */,
+				485F296A1F10CEC900C21394 /* AnyStrippedRepresentation.swift */,
 			);
 			path = AssociatedValueStrippable;
 			sourceTree = "<group>";
@@ -625,7 +626,6 @@
 			children = (
 				48FF4CEE1F0FC1B800864F73 /* DuplicatesHandling.swift */,
 				48FF4CF01F0FC1D000864F73 /* DuplicatesHandlerManager.swift */,
-				48FF4CF21F0FC1EA00864F73 /* AnyDuplicatesHandler.swift */,
 			);
 			path = DuplicatesHandling;
 			sourceTree = "<group>";
@@ -887,6 +887,7 @@
 				48298B691EE6B32400AB3724 /* Makeable+Styleable.swift in Sources */,
 				4841104B1EED82740016620B /* Segment.swift in Sources */,
 				48277A7B1F0FD138002D3412 /* Makeable+Mergeable.swift in Sources */,
+				485F296B1F10CEC900C21394 /* AnyStrippedRepresentation.swift in Sources */,
 				48277A8E1F0FD85E002D3412 /* AnyAssociatedValueStrippable.swift in Sources */,
 				48298B711EE6C1D000AB3724 /* Attributed.swift in Sources */,
 				482B89571EE00C6500C97D42 /* PlaceholderOwner.swift in Sources */,
@@ -940,7 +941,6 @@
 				48298B6B1EE6B33900AB3724 /* Composable+Styleable.swift in Sources */,
 				4822A1441EF29140005B8F77 /* UIButton+ViewStyle.swift in Sources */,
 				48277A781F0FCD2E002D3412 /* ExpressibleByAttributes+ExpressibleByArrayLiteral.swift in Sources */,
-				48FF4CF31F0FC1EA00864F73 /* AnyDuplicatesHandler.swift in Sources */,
 				4822A13E1EF290DF005B8F77 /* UISegmentedControl+ViewStyle.swift in Sources */,
 				486217841EFC0EDD0000FB1F /* UIControl+ViewStyle.swift in Sources */,
 				482B89511EE00C6500C97D42 /* Case.swift in Sources */,
