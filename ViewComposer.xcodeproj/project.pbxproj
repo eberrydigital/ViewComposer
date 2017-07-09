@@ -65,7 +65,6 @@
 		482A93571F10DA4900637BBB /* MergeInterceptorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48247B301F001CC800AF8F0A /* MergeInterceptorsTests.swift */; };
 		482A93581F10DAAA00637BBB /* DuplicatesHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48247B321F001D3E00AF8F0A /* DuplicatesHandlerTests.swift */; };
 		482A93591F10DAAD00637BBB /* StrippedEquatableComparableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48247B2E1F000E6600AF8F0A /* StrippedEquatableComparableTests.swift */; };
-		482A935B1F10E6ED00637BBB /* AnyDuplicatesHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482A935A1F10E6ED00637BBB /* AnyDuplicatesHandler.swift */; };
 		482B894E1EE00C6500C97D42 /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482B89191EE00C6500C97D42 /* Macros.swift */; };
 		482B89501EE00C6500C97D42 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482B891D1EE00C6500C97D42 /* Actor.swift */; };
 		482B89511EE00C6500C97D42 /* Case.swift in Sources */ = {isa = PBXBuildFile; fileRef = 482B891E1EE00C6500C97D42 /* Case.swift */; };
@@ -191,7 +190,6 @@
 		48298B701EE6C1D000AB3724 /* Attributed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attributed.swift; sourceTree = "<group>"; };
 		48298B781EE6C2AC00AB3724 /* Attributed+Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Attributed+Collection.swift"; sourceTree = "<group>"; };
 		48298B811EE6C61900AB3724 /* BaseAttributed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseAttributed.swift; sourceTree = "<group>"; };
-		482A935A1F10E6ED00637BBB /* AnyDuplicatesHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyDuplicatesHandler.swift; sourceTree = "<group>"; };
 		482B89191EE00C6500C97D42 /* Macros.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		482B891D1EE00C6500C97D42 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		482B891E1EE00C6500C97D42 /* Case.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Case.swift; sourceTree = "<group>"; };
@@ -637,7 +635,6 @@
 			children = (
 				48FF4CEE1F0FC1B800864F73 /* DuplicatesHandling.swift */,
 				48FF4CF01F0FC1D000864F73 /* DuplicatesHandlerManager.swift */,
-				482A935A1F10E6ED00637BBB /* AnyDuplicatesHandler.swift */,
 			);
 			path = DuplicatesHandling;
 			sourceTree = "<group>";
@@ -940,7 +937,6 @@
 				485524C81EF078080002C5D6 /* UIProgressView+ViewStyle.swift in Sources */,
 				4822A1361EF29083005B8F77 /* UICollectionView+ViewStyle.swift in Sources */,
 				48298B631EE6B28300AB3724 /* Composable+UIView.swift in Sources */,
-				482A935B1F10E6ED00637BBB /* AnyDuplicatesHandler.swift in Sources */,
 				484110491EED7F220016620B /* DataSourceOwner.swift in Sources */,
 				482B89591EE00C6500C97D42 /* TextHolder.swift in Sources */,
 				482B89541EE00C6500C97D42 /* ControlStateHolder.swift in Sources */,

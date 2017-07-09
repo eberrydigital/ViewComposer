@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension ExpressibleByAttributes {
+public extension Attributed {
     func merge(overwrittenBy dominant: Self) -> Self {
         return AttributesMerger.merge(dominant: dominant, yielding: self)
     }
@@ -22,7 +22,7 @@ public extension ExpressibleByAttributes {
 }
 
 //MARK: - Yielding
-public extension ExpressibleByAttributes {
+public extension Attributed {
     
     func merge(superiorTo yielding: Self) -> Self {
         return yielding.merge(overwrittenBy: self)

@@ -198,7 +198,7 @@ class MergeInterceptorsTests: BaseXCTest {
 
 struct FooBarViewAttributeMerger: AttributesMergable {
     
-    static func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E {
+    static func merge<E: Attributed>(dominant: E, yielding: E) -> E {
         guard
             let dominantViewStyle = dominant as? ViewStyle,
             let yieldingViewStyle = yielding as? ViewStyle,
@@ -206,7 +206,7 @@ struct FooBarViewAttributeMerger: AttributesMergable {
             let yieldingFooBar: FooBarViewStyle = yieldingViewStyle.value(.custom)
             else { return dominant.merge(superiorTo: yielding) } //intercept: false
         let merged = dominantFooBar.merge(superiorTo: yieldingFooBar) //intercept: false
-        return ViewStyle([.custom(merged)]) as! E
+        return ViewStyle(attributes: [.custom(merged)]) as! E
     }
     
     //    static func interceptMerge<A>(dominant dominantAttributed: A, yielding yieldingAttributed: A) -> A where A : Attributed {
@@ -262,6 +262,9 @@ extension ViewAttribute {
 }
 
 public struct FooBarViewStyle: Attributed {
+    
+    public static var duplicatesHandler: AnyDuplicatesHandler<FooBarViewStyle>?
+
     
     public var startIndex: Int = 0
     public var attributes: [FooBarViewAttribute]

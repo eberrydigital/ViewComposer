@@ -16,7 +16,7 @@ public final class AttributesMerger: AttributesMergable {
         get { return shared.mergers }
         set { shared.mergers = newValue }
     }
-    public func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E {
+    public func merge<E: Attributed>(dominant: E, yielding: E) -> E {
         var merged: E = dominant
         mergers.forEach {
             merged = $0.merge(dominant: merged, yielding: yielding)
@@ -24,7 +24,7 @@ public final class AttributesMerger: AttributesMergable {
         return merged
     }
     
-    public static func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E {
+    public static func merge<E: Attributed>(dominant: E, yielding: E) -> E {
         return shared.merge(dominant: dominant, yielding: yielding)
     }
     
@@ -46,6 +46,6 @@ public func append(_ merger: AttributesMergable.Type) {
     AttributesMerger.append(merger)
 }
 
-public func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E {
+public func merge<E: Attributed>(dominant: E, yielding: E) -> E {
     return AttributesMerger.merge(dominant: dominant, yielding: yielding)
 }

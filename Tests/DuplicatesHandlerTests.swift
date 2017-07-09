@@ -15,15 +15,8 @@ class DuplicatesHandlerTests: BaseXCTest {
     override func setUp() {
         super.setUp()
         
-//        let typeErasedhandler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>
-//        
-//        let handler = ViewStyleDuplicatesHandler<FooBarViewStyle>() { (baseAttributed: BaseAttributed) in
-//            return baseAttributed as? FooBarViewStyle
-//        }
-//        
-//        typeErasedhandler = AnyViewStyleDuplicatesHandler(handler)
-//
-        DuplicatesHandler.shared.handler = AnyDuplicatesHandler(TypedViewStyleDuplicatesHandler<FooBarViewStyle>() {
+        ViewStyle.duplicatesHandler = AnyDuplicatesHandler(TypedViewStyleDuplicatesHandler<ViewStyle>() {
+            print("DuplicatesHandler - attributes: `\($0)`")
             return FooBarViewStyle($0)
         })
     }
@@ -32,6 +25,7 @@ class DuplicatesHandlerTests: BaseXCTest {
         
         let bar = 237
         let style: ViewStyle = [.foo(fooText), .bar(bar)]
+        print("Style: `\(style)`")
         guard let foobarViewStyle: FooBarViewStyle = style.value(.custom) else { XCTAssert(false); return }
         XCTAssert(foobarViewStyle.count == 2)
         XCTAssert(foobarViewStyle.value(.bar) == bar)

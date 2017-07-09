@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension ExpressibleByAttributes {
+extension Attributed {
     public init(arrayLiteral elements: Attribute...) {
         self.init(Self.removeDuplicatesIfNeededAndAble(elements))
     }

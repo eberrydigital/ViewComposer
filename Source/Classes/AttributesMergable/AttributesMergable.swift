@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol AttributesMergable {
-    static func merge<E: ExpressibleByAttributes>(dominant: E, yielding: E) -> E
+    static func merge<E: Attributed>(dominant: E, yielding: E) -> E
 }

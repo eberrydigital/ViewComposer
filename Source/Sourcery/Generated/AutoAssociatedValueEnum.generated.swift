@@ -386,7 +386,7 @@ extension AssociatedValueStrippable {
                 }
             }
 
-                    var custom: AnyExpressibleByAttributes? {
+                    var custom: BaseAttributed? {
                         switch self {
                             case .custom(let custom):
                                 return custom

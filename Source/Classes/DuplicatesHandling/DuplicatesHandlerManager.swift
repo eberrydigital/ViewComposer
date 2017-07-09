@@ -7,12 +7,8 @@
 
 import Foundation
 
-public final class DuplicatesHandler {
-    public static var shared = DuplicatesHandler()
-    public var handler: AnyDuplicatesHandler?
-}
 
-extension ExpressibleByAttributes {
+extension Attributed {
     
     /// Transforms `[A(1), A(2), A(7)` to `A(x)` where `x` is the selected
     // associated value from the array of duplicate attributes according to
@@ -20,9 +16,10 @@ extension ExpressibleByAttributes {
     static func choseDuplicate(from duplicates: [Attribute]) -> Attribute? {
         guard
             let viewAttributes = duplicates as? [ViewAttribute],
-            let handler = DuplicatesHandler.shared.handler
+            let handler = duplicatesHandler
             else { return duplicates.first }
         //swiftlint:disable force_cast
+        print("ExpressibleByAttributes.choseDuplicate - viewAttributes: `\(viewAttributes)` ")
         let chosenAttribute = handler.choseAttributeFromDuplicates(viewAttributes)
         return chosenAttribute as? Attribute
     }
@@ -44,7 +41,7 @@ extension ExpressibleByAttributes {
     }
 }
 
-extension ExpressibleByAttributes {
+extension Attributed {
     
     /// Groups together attributes with same key returns those attributes which has
     /// duplicates values. Attributes with no duplicates are also returned, contained

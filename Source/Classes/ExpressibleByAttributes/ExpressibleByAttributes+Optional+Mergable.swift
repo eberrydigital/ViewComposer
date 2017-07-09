@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Optional where Wrapped: ExpressibleByAttributes {
+public extension Optional where Wrapped: Attributed {
     func merge(overwrittenBy dominant: Wrapped) -> Wrapped {
         guard let `self` = self else { return dominant }
         return self.merge(overwrittenBy: dominant)

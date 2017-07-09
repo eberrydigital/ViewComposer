@@ -8,136 +8,14 @@
 import Foundation
 
 //swiftlint:disable generic_type_name
-
-public typealias SingleAttributeTransformer<Attributed: ExpressibleByAttributes, CustomAttributed: ExpressibleByAttributes> = (Attributed.Attribute) -> CustomAttributed?
-public typealias AttributesTransformer<CustomAttributed: ExpressibleByAttributes, Attributed: ExpressibleByAttributes> = ([CustomAttributed.Attribute]) -> CustomAttributed
-
-public typealias AttributedTransformer<CustomAttributed: ExpressibleByAttributes, Attributed: ExpressibleByAttributes> = (CustomAttributed) -> Attributed.Attribute
-
-//public protocol CustomAttributedToAttributeTransformer {
-//    associatedtype Attribute: AttributeType
-//    associatedtype Custom: ExpressibleByAttributes
-//    func transformCustomAttributedToAttribute(custom customAttributed: Custom) -> Attribute
-//}
-//
-////swiftlint:disable type_name
-//public struct AnyCustomAttributedToAttributeTransformer {
-//    private let _transformCustomAttributedToAttribute: (AnyExpressibleByAttributes) -> AnyAttribute
-//    
-//    public init<Concrete: CustomAttributedToAttributeTransformer>(_ concrete: Concrete) where Concrete.Attribute.Stripped.RawValue == String, Concrete.Custom.Attribute.Stripped.RawValue == String {
-//        
-//        _transformCustomAttributedToAttribute = { (custom: Concrete.Custom) in
-//            let attribute: Concrete.Attribute = concrete.transformCustomAttributedToAttribute(custom: custom)
-//            return AnyAttribute(attribute)
-//        }
-//    }
-//    
-//    public func transformCustomAttributedToAttribute(custom customAttributed: AnyExpressibleByAttributes) -> AnyAttribute {
-//        return _transformCustomAttributedToAttribute(customAttributed)
-//    }
-//}
-
-public protocol BaseToCustomTransformer {
-    associatedtype Custom: ExpressibleByAttributes
-    func transformBaseToCustom(base baseAttributed: BaseAttributed) -> Custom
-}
-
-public struct AnyBaseToCustomTransformer: BaseToCustomTransformer {
-    private let _transformBaseToCustom: (BaseAttributed) -> AnyExpressibleByAttributes
-    public init<Concrete: BaseToCustomTransformer>(_ concrete: Concrete) where Concrete.Custom.Attribute.Stripped.RawValue == String {
-        _transformBaseToCustom = { return AnyExpressibleByAttributes(concrete.transformBaseToCustom(base: $0)) }
-    }
-    public func transformBaseToCustom(base baseAttributed: BaseAttributed) -> AnyExpressibleByAttributes {
-        return _transformBaseToCustom(baseAttributed)
-    }
-}
-
-public protocol DuplicatesHandling {
-    associatedtype Attributed: ExpressibleByAttributes
-    associatedtype CustomAttributed: ExpressibleByAttributes
-    
-    var singleAttributeTransformer: SingleAttributeTransformer<Attributed, CustomAttributed> { get }
-    var attributesTransformer: AttributesTransformer<CustomAttributed, Attributed> { get }
-    var attributedTransformer: AttributedTransformer<CustomAttributed, Attributed> { get }
-    
-    func choseAttributeFromDuplicates(_ duplicates: [Attributed.Attribute]) -> Attributed.Attribute
-}
-
-extension DuplicatesHandling {
-    
-    public typealias Attribute = Attributed.Attribute
-    public typealias CustomAttribute = CustomAttributed.Attribute
-    
-    public func choseAttributeFromDuplicates(_ duplicates: [Attribute]) -> Attribute {
-        var customAttributes = [CustomAttribute]()
-        let customStyles: [CustomAttributed] = duplicates.flatMap(singleAttributeTransformer)
-        customStyles.forEach {
-            customAttributes.append(contentsOf: $0.attributes)
-        }
-        let customStyle: CustomAttributed = attributesTransformer(customAttributes)
-        return attributedTransformer(customStyle)
-    }
-}
-
-public protocol ViewStyleDuplicatesHandling: DuplicatesHandling {
-    associatedtype Attributed = ViewStyle
-    var baseAttributedTransformer: AnyBaseToCustomTransformer { get }
-    var _attributesTransformer: AttributesTransformer<CustomAttributed, ViewStyle> { get }
-    var _attributedTransformer: AttributedTransformer<CustomAttributed, ViewStyle> { get }
-}
-
-extension ViewStyleDuplicatesHandling {
-    public var singleAttributeTransformer: SingleAttributeTransformer<ViewStyle, CustomAttributed> {
-        return { (viewAttribute: ViewAttribute) in
-            guard let custom = viewAttribute.custom else { return nil }
-            return self.baseAttributedTransformer.transformBaseToCustom(base: custom) as? Self.CustomAttributed
-        }
-    }
-    
-    public var attributesTransformer: AttributesTransformer<CustomAttributed, ViewStyle> {
-        return _attributesTransformer
-    }
-    
-    public var attributedTransformer: AttributedTransformer<CustomAttributed, ViewStyle> {
-        return _attributedTransformer
-    }
-}
-
-extension ViewStyleDuplicatesHandling {
-    
-    public var _attributesTransformer: AttributesTransformer<CustomAttributed, ViewStyle> {
-        return { customAttributes in return CustomAttributed(customAttributes) }
-    }
-    
-    public var _attributedTransformer: AttributedTransformer<CustomAttributed, ViewStyle> {
-        return { customStyle in return ViewAttribute.custom(customStyle) }
-    }
-}
-
-public struct ViewStyleDuplicatesHandler<CustomStyle: ExpressibleByAttributes>: ViewStyleDuplicatesHandling {
-    public typealias Attributed = ViewStyle
-
-    public typealias CustomAttributed = CustomStyle
-
-    public var baseAttributedTransformer: AnyBaseToCustomTransformer
-    
-    public init(baseAttributedTransformer: AnyBaseToCustomTransformer) {
-        self.baseAttributedTransformer = baseAttributedTransformer
-    }
-}
-
 protocol ViewStyleDuplicatesHandleCapable {
     associatedtype Custom: ExpressibleByAttributes
     func transformToCustom(_ attribute: ViewAttribute) -> Custom?
-//    var makeCustom: (([Custom.Attribute]) -> Custom) { get }
-    func transformCustomAttributesToCustom(_ customAttributes: [Custom.Attribute]) -> Custom
+    var makeCustom: (([Custom.Attribute]) -> Custom) { get }
     func choseAttributeFromDuplicates(_ duplicates: [ViewAttribute]) -> ViewAttribute
 }
 
 extension ViewStyleDuplicatesHandleCapable {
-    func transformCustomAttributesToCustom(_ customAttributes: [Custom.Attribute]) -> Custom {
-        return Custom(customAttributes)
-    }
     
     func transformToViewAttribute(_ custom: Custom) -> ViewAttribute {
         return ViewAttribute.custom(custom)
@@ -150,7 +28,7 @@ extension ViewStyleDuplicatesHandleCapable {
             customAttributes.append(contentsOf: customStyle.attributes)
             
         }
-        let custom = transformCustomAttributesToCustom(customAttributes)
+        let custom = makeCustom(customAttributes)
         return transformToViewAttribute(custom)
     }
 }
@@ -159,16 +37,30 @@ public struct TypedViewStyleDuplicatesHandler<_Custom: ExpressibleByAttributes>:
     
     typealias Custom = _Custom
     
-    private let makeCustom: (([Custom.Attribute]) -> Custom)
+    let makeCustom: (([Custom.Attribute]) -> Custom)
     
     init(makeCustom: @escaping (([Custom.Attribute]) -> Custom)) {
         self.makeCustom = makeCustom
     }
     
+    func foo<F: ExpressibleByAttributes>(_ fooAttributes: [F.Attribute]) -> F {
+        fatalError("how foo")
+    }
+    
     func transformToCustom(_ attribute: ViewAttribute) -> Custom? {
-        let customAttribute = attribute.custom
-        guard let custom = customAttribute as? Custom else { return nil }
-        return custom
+        switch attribute {
+        case .custom(let customAnyExpressibleByArrayAttributes):
+            if let customStyle = customAnyExpressibleByArrayAttributes as? Custom {
+                print("Epic win!")
+                return customStyle
+            } else {
+                print("was case .custom, but failed to cast, due to information loss, due to Type Erasure")
+                return nil
+            }
+        default:
+            print("not case .custom")
+            return nil
+        }
     }
     
     func transformCustomAttributesToCustom(_ customAttributes: [Custom.Attribute]) -> Custom {
@@ -176,38 +68,35 @@ public struct TypedViewStyleDuplicatesHandler<_Custom: ExpressibleByAttributes>:
     }
 }
 
-public struct AnyDuplicatesHandler: ViewStyleDuplicatesHandleCapable {
+public struct AnyDuplicatesHandler<_Custom: ExpressibleByAttributes>: ViewStyleDuplicatesHandleCapable {
     
-    private let _transformToCustom: (ViewAttribute) -> AnyExpressibleByAttributes?
+    public typealias Custom = _Custom
     
-    init<Base: ViewStyleDuplicatesHandleCapable>(_ base: Base) where Base.Custom.Attribute.Stripped.RawValue == String {
-        _transformToCustom = { guard let custom = base.transformToCustom($0) else { return nil }; return AnyExpressibleByAttributes(custom) }
+    private let _transformToCustom: (ViewAttribute) -> Custom?
+    private let _makeCustom: (([Custom.Attribute]) -> Custom)
+    
+    init<Base: ViewStyleDuplicatesHandleCapable>(_ base: Base) where Base.Custom == Custom {
+//        _transformToCustom = { guard let custom = base.transformToCustom($0) else { return nil }; return AnyExpressibleByAttributes(custom) }
+        _transformToCustom = { base.transformToCustom($0) }
+        _makeCustom = { base.makeCustom($0) }
+        guard let typed = base as? TypedViewStyleDuplicatesHandler<Custom> else { return }
+        _foo = { typed.foo($0) }
     }
     
-    func transformToCustom(_ attribute: ViewAttribute) -> AnyExpressibleByAttributes? {
+    public func transformToCustom(_ attribute: ViewAttribute) -> Custom? {
         return _transformToCustom(attribute)
     }
+    
+    public var makeCustom: (([Custom.Attribute]) -> Custom) {
+        return _makeCustom
+    }
+    
+    typealias FooTyped<F: ExpressibleByAttributes> = ([F.Attribute]) -> F
+    private var _foo: FooTyped<Custom>?
+    
+    func foo<F: ExpressibleByAttributes>(_ fooAttributes: [F.Attribute]) -> F {
+        guard let fooStored = _foo else { fatalError("how foo") }
+        //swiftlint:disable force_cast
+        return fooStored(fooAttributes as! [Custom.Attribute])
+    }
 }
-
-//
-//
-//public struct AnyViewStyleDuplicatesHandler: ViewStyleDuplicatesHandling {
-//    /*
-//    associatedtype Attributed: ExpressibleByAttributes
-//    associatedtype CustomAttributed: ExpressibleByAttributes
-//    
-//    var singleAttributeTransformer: SingleAttributeTransformer<Attributed, CustomAttributed> { get }
-//    var attributesTransformer: AttributesTransformer<CustomAttributed, Attributed> { get }
-//    var attributedTransformer: AttributedTransformer<CustomAttributed, Attributed> { get }
-//     
-//     var baseAttributedTransformer: AnyBaseToCustomTransformer { get }
-//    */
-//    
-//    private let _getBaseAttributedTransformer: () -> AnyBaseToCustomTransformer
-//    public var baseAttributedTransformer: AnyBaseToCustomTransformer { return _getBaseAttributedTransformer() }
-//    
-//    init<Base: ViewStyleDuplicatesHandling>(_ base: Base) where Base.CustomAttributed.Attribute.Stripped.RawValue == String {
-//        _getBaseAttributedTransformer = { base.baseAttributedTransformer }
-//    }
-//    
-//}

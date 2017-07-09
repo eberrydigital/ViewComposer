@@ -7,14 +7,11 @@
 
 import Foundation
 
-public protocol ExpressibleByAttributes: BaseAttributed, ExpressibleByArrayLiteral, CustomStringConvertible {
+public protocol ExpressibleByAttributes: BaseAttributed, CustomStringConvertible {
     /// `Attribute` type used to style. Needs conformancs to `AssociatedValueStrippable` and `AssociatedValueEnumExtractor`
     /// so that we can perform merging operations and also logic such as `contains:attribute` and `value` extraction,
     /// accessing the value associated to a certain attribute. e.g. the `UIColor` associated to the attribute `backgroundColor`
     associatedtype Attribute: AttributeType
-    
-//    var domainTranslator: DomainTranslator? { get }
-    init(attributes: [Attribute])
     
     /// Attributes used to style some `Styleable` type
     var attributes: [Attribute] { get }
@@ -24,7 +21,7 @@ public protocol ExpressibleByAttributes: BaseAttributed, ExpressibleByArrayLiter
 //    public var domainTranslator: DomainTranslator? { return nil }
 //}
 
-extension ExpressibleByAttributes {
+extension Attributed {
     public init(_ elements: [Attribute]) {
         self.init(attributes: Self.removeDuplicatesIfNeededAndAble(elements))
     }

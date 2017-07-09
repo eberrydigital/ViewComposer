@@ -9,6 +9,8 @@
 import UIKit
 
 public struct ViewStyle: Attributed {
+    public static var duplicatesHandler: AnyDuplicatesHandler<ViewStyle>?
+
     public typealias Attribute = ViewAttribute
     public typealias Element = ViewAttribute
         
