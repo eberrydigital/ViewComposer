@@ -9,7 +9,7 @@ import Foundation
 
 public final class DuplicatesHandler {
     public static var shared = DuplicatesHandler()
-    public var handler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>?
+    public var handler: AnyDuplicatesHandler?
 }
 
 extension ExpressibleByAttributes {

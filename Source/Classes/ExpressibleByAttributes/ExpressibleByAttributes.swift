@@ -13,15 +13,30 @@ public protocol ExpressibleByAttributes: BaseAttributed, ExpressibleByArrayLiter
     /// accessing the value associated to a certain attribute. e.g. the `UIColor` associated to the attribute `backgroundColor`
     associatedtype Attribute: AttributeType
     
+//    var domainTranslator: DomainTranslator? { get }
     init(attributes: [Attribute])
     
     /// Attributes used to style some `Styleable` type
-    var attributes: [Attribute] { get set }
+    var attributes: [Attribute] { get }
 }
+//
+//extension ExpressibleByAttributes {
+//    public var domainTranslator: DomainTranslator? { return nil }
+//}
 
 extension ExpressibleByAttributes {
     public init(_ elements: [Attribute]) {
         self.init(attributes: Self.removeDuplicatesIfNeededAndAble(elements))
     }
 }
-
+//
+//public protocol DomainTranslator {
+//    func translate<E: ExpressibleByAttributes>(base: BaseAttributed) -> E?
+//}
+//
+//extension ViewStyle {
+//    var translation: (BaseAttributed) -> ExpressibleByAttributes
+//    var domainTranslator: DomainTranslator? { return ViewStyleDomainTranslator() }
+//}
+//
+//struct ViewStyleDomainTranslator: DomainTranslator {}

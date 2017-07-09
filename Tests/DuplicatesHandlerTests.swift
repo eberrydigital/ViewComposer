@@ -15,15 +15,17 @@ class DuplicatesHandlerTests: BaseXCTest {
     override func setUp() {
         super.setUp()
         
-        let typeErasedhandler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>
-        
-        let handler = ViewStyleDuplicatesHandler<FooBarViewStyle>() { (baseAttributed: BaseAttributed) in
-            return baseAttributed as? FooBarViewStyle
-        }
-        
-        typeErasedhandler = AnyViewStyleDuplicatesHandler(handler)
-
-        DuplicatesHandler.shared.handler = typeErasedhandler
+//        let typeErasedhandler: AnyViewStyleDuplicatesHandler<AnyExpressibleByAttributes<AnyAssociatedValueStrippable<AnyStrippedRepresentation<String>>>>
+//        
+//        let handler = ViewStyleDuplicatesHandler<FooBarViewStyle>() { (baseAttributed: BaseAttributed) in
+//            return baseAttributed as? FooBarViewStyle
+//        }
+//        
+//        typeErasedhandler = AnyViewStyleDuplicatesHandler(handler)
+//
+        DuplicatesHandler.shared.handler = AnyDuplicatesHandler(TypedViewStyleDuplicatesHandler<FooBarViewStyle>() {
+            return FooBarViewStyle($0)
+        })
     }
     
     func testCustomAttributeDuplicatesInstantiation() {

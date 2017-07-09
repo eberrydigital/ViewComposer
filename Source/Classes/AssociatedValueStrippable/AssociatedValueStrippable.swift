@@ -11,7 +11,13 @@ public protocol AssociatedValueEnumExtractor {
     var associatedValue: Any? { get }
 }
 
-public protocol StrippedRepresentation: RawRepresentable, Equatable, Hashable, Comparable {}
+public protocol StringRawValueRepresentable: RawRepresentable {}
+
+public extension StringRawValueRepresentable {
+    typealias RawValue = String
+}
+
+public protocol StrippedRepresentation: StringRawValueRepresentable, Equatable, Hashable, Comparable {}
 public protocol AssociatedValueStrippable: Equatable, Comparable {
     associatedtype Stripped: StrippedRepresentation
     var stripped: Stripped { get }

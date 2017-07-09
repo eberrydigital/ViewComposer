@@ -7,59 +7,16 @@
 
 import Foundation
 
-//swiftlint:disable generic_type_name
-public final class AnyExpressibleByAttributes<_Attribute: AttributeType>: ExpressibleByAttributes {
+public struct AnyExpressibleByAttributes: ExpressibleByAttributes {
     
-    public init(attributes: [Attribute]) {
-        fatalError("Use init(concrete: Concrete) instead")
-    }
-
-    public typealias Attribute = _Attribute
-    private let box: _AnyExpressibleByAttributesBase<Attribute>
-    
-    public init<Concrete: ExpressibleByAttributes>(_ concrete: Concrete) where Concrete.Attribute == Attribute {
-        box = _AnyExpressibleByAttributesBox(concrete)
+    public init(attributes: [AnyAttribute]) {
+        _getAttributes = { attributes.map { AnyAttribute($0) } }
     }
     
-    public func install(on styleable: Any) { box.install(on: styleable) }
-    public var attributes: [Attribute] {
-        set { box.attributes = newValue }
-        get { return box.attributes }
-    }
-}
-
-private final class _AnyExpressibleByAttributesBox<Concrete: ExpressibleByAttributes>: _AnyExpressibleByAttributesBase<Concrete.Attribute> {
-    private var concrete: Concrete
-    
-    init(_ concrete: Concrete) {
-        self.concrete = concrete
-        super.init()
+    public init<Base: ExpressibleByAttributes>(_ base: Base) {
+        _getAttributes = { base.attributes.map { AnyAttribute($0) } }
     }
     
-    required init(attributes: [Attribute]) {
-        fatalError("Use init(concrete: Concrete) instead")
-    }
-    
-    override func install(on styleable: Any) { concrete.install(on: styleable) }
-    override var attributes: [Attribute] {
-        set { abstractMethod() }
-        get { return concrete.attributes }
-    }
-}
-
-private class _AnyExpressibleByAttributesBase<_Attribute: AttributeType>: ExpressibleByAttributes {
-    typealias Attribute = _Attribute
-    init() {
-        guard type(of: self) != _AnyExpressibleByAttributesBase.self else { fatalError("Use Box class") }
-    }
-    
-    required init(attributes: [Attribute]) {
-        fatalError("Use init(concrete: Concrete) instead")
-    }
-    
-    func install(on styleable: Any) { abstractMethod() }
-    var attributes: [Attribute] {
-        set { abstractMethod() }
-        get { abstractMethod() }
-    }
+    private let _getAttributes: () -> [AnyAttribute]
+    public var attributes: [AnyAttribute] { return _getAttributes() }
 }
