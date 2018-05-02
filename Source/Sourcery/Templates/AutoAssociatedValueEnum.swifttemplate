@@ -1,3 +1,4 @@
+// swiftlint:disable all
 <%_
 func importImportsIfNeeded() -> String {
     guard let imports = arguments["imports"] as? [String] else { return "" }
