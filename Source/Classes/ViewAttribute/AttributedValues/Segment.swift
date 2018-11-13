@@ -8,14 +8,14 @@
 
 import Foundation
 
-public enum Segment {
+public enum SegmentedControl {
     case title(String)
     case image(UIImage)
 }
 
 public extension UISegmentedControl {
-    
-    func insertSegment(_ segment: Segment, at index: Int, animated: Bool = false) {
+
+    func insertSegment(_ segment: SegmentedControl, at index: Int, animated: Bool = false) {
         switch segment {
         case .title(let title):
             insertSegment(withTitle: title, at: index, animated: animated)
@@ -25,7 +25,7 @@ public extension UISegmentedControl {
     }
 }
 
-extension Array where Element == Segment {
+extension Array where Element == SegmentedControl {
     func add(to control: UISegmentedControl, animated: Bool = false) {
         for (index, segment) in enumerated() {
             control.insertSegment(segment, at: index, animated: animated)

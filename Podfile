@@ -5,7 +5,7 @@ inhibit_all_warnings!
 
 def pods
   pod 'SwiftLint'
-  pod 'Sourcery', '> 0.8'
+  pod 'Sourcery'
 end
 
 target 'ViewComposer' do

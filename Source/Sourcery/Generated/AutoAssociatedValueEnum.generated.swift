@@ -1,6 +1,7 @@
-// Generated using Sourcery 0.12.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.15.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
+// swiftlint:disable all
 
 
 
@@ -1639,7 +1640,7 @@ extension ViewAttribute: AssociatedValueEnumExtractor {
         }
     }
 
-    var segments: [Segment]? {
+    var segments: [SegmentedControl]? {
         switch self {
             case .segments(let segments):
                 return segments

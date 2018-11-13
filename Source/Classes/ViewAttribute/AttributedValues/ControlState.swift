@@ -129,7 +129,7 @@ extension Array where Element == ControlStateStyle {
 }
 
 public struct ControlStateMerger: MergeInterceptor {
-    public static func interceptMerge<A>(master masterAttributed: A, slave: A) -> A where A : Attributed {
+    public static func interceptMerge<A>(master masterAttributed: A, slave: A) -> A where A:Attributed {
         guard
             let master = masterAttributed as? ViewStyle,
             let slave = slave as? ViewStyle,

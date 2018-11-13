@@ -263,7 +263,7 @@ public enum ViewAttribute {
     case searchBarStyle(UISearchBarStyle)
     
     //MARK: - UISegmentedControl
-    case segments([Segment])
+    case segments([SegmentedControl])
     
     //MARK: ThumbTintColorOwner (UISwitch and UISlider)
     case thumbTintColor(UIColor?)
